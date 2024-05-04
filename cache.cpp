@@ -38,22 +38,22 @@ void Cache::add(std::string key, int value)
         {
             struct node* temp = pHead;
             struct node* pPrev = nullptr;
-            struct node* pHere = nullptr;
-            while(temp->pNext != nullptr)
+            while (temp != nullptr) 
             {
-                if (temp->key == key && temp->value_int == value)
+                if (temp->key == key && temp->value_int == value) 
                 {
-                    pHere = temp;
-                    pPrev->pNext = temp->pNext;
+                    if (pPrev == nullptr) {
+                        // 매칭되는 노드가 헤드인 경우
+                        pHead = temp->pNext;
+                    } else {
+                        pPrev->pNext = temp->pNext;
+                    }
+                    delete temp;
+                    break;
                 }
                 pPrev = temp;
                 temp = temp->pNext;
             }
-            temp->pNext = pHere;
-            pHere->pNext = nullptr;
-            delete pPrev;
-            delete temp;
-            delete pHere;
         }
         else 
         {
@@ -70,7 +70,6 @@ void Cache::add(std::string key, int value)
             }
             pLastNode->pNext = pNode;
             Cur_size++;
-            delete pLastNode;
         }
     }
 }
@@ -96,22 +95,22 @@ void Cache::add(std::string key, double value)
         {
             struct node* temp = pHead;
             struct node* pPrev = nullptr;
-            struct node* pHere = nullptr;
-            while(temp->pNext != nullptr)
+            while (temp != nullptr) 
             {
-                if (temp->key == key && temp->value_double == value)
+                if (temp->key == key && temp->value_double == value) 
                 {
-                    pHere = temp;
-                    pPrev->pNext = temp->pNext;
+                    if (pPrev == nullptr) {
+                        // 매칭되는 노드가 헤드인 경우
+                        pHead = temp->pNext;
+                    } else {
+                        pPrev->pNext = temp->pNext;
+                    }
+                    delete temp;
+                    break;
                 }
                 pPrev = temp;
                 temp = temp->pNext;
             }
-            temp->pNext = pHere;
-            pHere->pNext = nullptr;
-            delete pPrev;
-            delete temp;
-            delete pHere;
         }
         else 
         {
