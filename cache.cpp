@@ -37,8 +37,8 @@ void Cache::add(std::string key, int value)
         if (this->get(key, value))
         {
             struct node* temp = pHead;
-            struct node* pPrev = new struct node;
-            struct node* pHere = new struct node;
+            struct node* pPrev = nullptr;
+            struct node* pHere = nullptr;
             while(temp->pNext != nullptr)
             {
                 if (temp->key == key && temp->value_int == value)
@@ -95,8 +95,8 @@ void Cache::add(std::string key, double value)
         if (this->get(key, value))
         {
             struct node* temp = pHead;
-            struct node* pPrev;
-            struct node* pHere;
+            struct node* pPrev = nullptr;
+            struct node* pHere = nullptr;
             while(temp->pNext != nullptr)
             {
                 if (temp->key == key && temp->value_double == value)
@@ -153,7 +153,6 @@ bool Cache::get(std::string key, int &value)
 // 타입과 key가 동일한 원소가 없다면 false를 반환한다.
 bool Cache::get(std::string key, double &value)
 {
-    bool isThere = false;
     struct node* temp = pHead;
     while (temp != nullptr)
     {
