@@ -1,6 +1,7 @@
 #ifndef CACHE_H
 #define CACHE_H
 
+#include <iostream>
 #include <string>
 
 #define CACHE_SIZE 10
@@ -9,6 +10,16 @@ class Cache {
 private:
   // TODO: private inner struct/class 선언 가능
   // TODO: private 멤버 변수와 함수 추가 가능
+  struct node
+  {
+    std::string key;
+    int value_int;
+    double value_double;
+    struct node* pNext; 
+  };
+  int Cur_size;
+  int Max_size = CACHE_SIZE;
+  struct node* pHead;
 
 public:
   Cache();

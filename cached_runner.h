@@ -2,11 +2,15 @@
 #define CACHED_RUNNER_H
 
 #include "cache.h"
+#include "task_runner.h"
 #include <string>
 
 class CachedRunner {
 private:
   // TODO: private 멤버 변수와 함수 추가 가능
+  int hits_num;
+  int miss_num;
+  Cache cache;
 
 public:
   CachedRunner(Cache &cache);
