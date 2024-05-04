@@ -20,6 +20,28 @@ Cache::~Cache()
 // int를 cache에 추가한다
 void Cache::add(std::string key, int value)
 {
+    if (this->get(key, value))
+    {
+        struct node* temp = pHead;
+        struct node* pPrev = nullptr;
+        while (temp != nullptr) 
+        {
+            if (temp->key == key && temp->value_int == value) 
+            {
+                if (pPrev == nullptr) {
+                    // 매칭되는 노드가 헤드인 경우
+                    pHead = temp->pNext;
+                } else {
+                    pPrev->pNext = temp->pNext;
+                }
+                delete temp;
+                break;
+            }
+            pPrev = temp;
+            temp = temp->pNext;
+        }
+    }
+    
     struct node* pNode = new struct node;
     pNode->key = key;
     pNode->value_int = value;
@@ -33,50 +55,51 @@ void Cache::add(std::string key, int value)
     }
     else
     {
-        // cache에 정보가 이미 저장되어 있는 경우
-        if (this->get(key, value))
+        if (Cur_size >= Max_size)
         {
             struct node* temp = pHead;
-            struct node* pPrev = nullptr;
-            while (temp != nullptr) 
-            {
-                if (temp->key == key && temp->value_int == value) 
-                {
-                    if (pPrev == nullptr) {
-                        // 매칭되는 노드가 헤드인 경우
-                        pHead = temp->pNext;
-                    } else {
-                        pPrev->pNext = temp->pNext;
-                    }
-                    delete temp;
-                    break;
-                }
-                pPrev = temp;
-                temp = temp->pNext;
-            }
+            pHead = pHead->pNext;
+            delete temp;
+            Cur_size--;
         }
-        else 
+        struct node* pLastNode = pHead;
+        while (pLastNode->pNext != nullptr)
         {
-            if (Cur_size >= Max_size)
-            {
-                struct node* temp = pHead;
-                pHead = pHead->pNext;
-                delete temp;
-            }
-            struct node* pLastNode = pHead;
-            while (pLastNode->pNext != nullptr)
-            {
-                pLastNode = pLastNode->pNext;
-            }
-            pLastNode->pNext = pNode;
-            Cur_size++;
+            pLastNode = pLastNode->pNext;
         }
+        pLastNode->pNext = pNode;
+        Cur_size++;
     }
 }
 
 // double을 cache에 추가한다
 void Cache::add(std::string key, double value)
 {
+    if (this->get(key, value))
+    {
+        struct node* temp = pHead;
+        struct node* pPrev = nullptr;
+        while (temp != nullptr) 
+        {
+            if (temp->key == key && temp->value_double == value) 
+            {
+                if (pPrev == nullptr) 
+                {
+                    // 매칭되는 노드가 헤드인 경우
+                    pHead = temp->pNext;
+                } 
+                else 
+                {
+                    pPrev->pNext = temp->pNext;
+                }
+                delete temp;
+                break;
+            }
+            pPrev = temp;
+            temp = temp->pNext;
+        }
+    }
+
     struct node* pNode = new struct node;
     pNode->key = key;
     pNode->value_int = 0;
@@ -90,45 +113,20 @@ void Cache::add(std::string key, double value)
     }
     else
     {
-        // cache에 정보가 이미 저장되어 있는 경우
-        if (this->get(key, value))
+        if (Cur_size >= Max_size)
         {
             struct node* temp = pHead;
-            struct node* pPrev = nullptr;
-            while (temp != nullptr) 
-            {
-                if (temp->key == key && temp->value_double == value) 
-                {
-                    if (pPrev == nullptr) {
-                        // 매칭되는 노드가 헤드인 경우
-                        pHead = temp->pNext;
-                    } else {
-                        pPrev->pNext = temp->pNext;
-                    }
-                    delete temp;
-                    break;
-                }
-                pPrev = temp;
-                temp = temp->pNext;
-            }
+            pHead = pHead->pNext;
+            delete temp;
+            Cur_size--;
         }
-        else 
+        struct node* pLastNode = pHead;
+        while (pLastNode->pNext != nullptr)
         {
-            if (Cur_size >= Max_size)
-            {
-                struct node* temp = pHead;
-                pHead = pHead->pNext;
-                delete temp;
-            }
-            struct node* pLastNode = pHead;
-            while (pLastNode->pNext != nullptr)
-            {
-                pLastNode = pLastNode->pNext;
-            }
-            pLastNode->pNext = pNode;
-            Cur_size++;
-            delete pLastNode;
+            pLastNode = pLastNode->pNext;
         }
+        pLastNode->pNext = pNode;
+        Cur_size++;
     }
 }
 
